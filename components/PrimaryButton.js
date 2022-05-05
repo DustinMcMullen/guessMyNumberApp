@@ -1,9 +1,13 @@
 import { View, Text, StyleSheet, Pressable } from "react-native"
 
-export function PrimaryButton ({children}) {
+export function PrimaryButton ({children, resetInputHandler=null, confirmInputHandler=null}) {
 
     function pressHandler () {
-        console.log("button children: ", children);
+        if (children === "Reset") {
+            resetInputHandler();
+        } else if (children === "Confirm") {
+            confirmInputHandler()
+        }
     }
 
     return (
