@@ -1,5 +1,8 @@
 import { useState } from "react";
-import { View, Text, Button, StyleSheet } from "react-native";
+import { View, Text, StyleSheet, Alert } from "react-native";
+import { Title } from "../components/Title";
+import { NumberContainer } from "../components/game/NumberContainer";
+import { PrimaryButton } from "../components/PrimaryButton";
 
 export function GameScreen ({userNumber}) {
 
@@ -16,7 +19,7 @@ export function GameScreen ({userNumber}) {
         if (userNumber < compGuess){
             setUpperBound(compGuess);
         } else {
-            console.log("No Cheating!");
+            Alert.alert("No Cheating!", 'We want a fair game.', [ {text: 'oops', style: 'cancel'} ]);
             return
         } 
     }
@@ -25,7 +28,7 @@ export function GameScreen ({userNumber}) {
         if (userNumber > compGuess){
             setLowerBound(compGuess + 1);
         }  else {
-            console.log("No Cheating!");
+            Alert.alert("No Cheating!");
             return
         } 
     }
@@ -34,25 +37,26 @@ export function GameScreen ({userNumber}) {
 
     return(
         <View style={styles.gameContainer}>
-            <Text style={styles.compGuess}>{compGuess}</Text>
-            <View style={styles.buttonContainer}>
-                <Button title="Lower" onPress={handleLowerHint} />
-                <Button title="Higher" onPress={handleHigherHint} />
+            <Title>Computers Guess</Title>
+            <NumberContainer>{compGuess}</NumberContainer>
+            <View style={styles.hintContainer}>
+                <Text>higher or lower?</Text>
+                <View style={styles.buttonContainer}>
+                    <PrimaryButton onPress={handleLowerHint}>-</PrimaryButton>
+                    <PrimaryButton onPress={handleHigherHint}>+</PrimaryButton>
+                </View>
             </View>
         </View>
     )
 }
 
-const styles =StyleSheet.create({
+const styles = StyleSheet.create({
     gameContainer: {
         flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
+        padding: 24,
     },
-    compGuess: {
-        color: 'white',
-        fontSize: 80,
-        fontWeight: 'bold',
+    hintContainer: {
+        alignItems: "center",
     },
     buttonContainer: {
         flexDirection: "row",
