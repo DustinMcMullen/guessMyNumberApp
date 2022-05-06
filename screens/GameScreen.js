@@ -1,15 +1,21 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { View, Text, StyleSheet, Alert } from "react-native";
 import { Title } from "../components/Title";
 import { NumberContainer } from "../components/game/NumberContainer";
 import { PrimaryButton } from "../components/PrimaryButton";
 
-export function GameScreen ({userNumber}) {
+export function GameScreen ({userNumber, onGameOver}) {
 
     const [lowerBound, setLowerBound] = useState(1);
     const [upperBound, setUpperBound] = useState(100)
 
     const compGuess = Math.floor( Math.random() * (upperBound - lowerBound) + lowerBound );
+
+    useEffect( () => {
+        if (userNumber === compGuess) {
+            onGameOver();
+        }
+    }, [userNumber, compGuess, onGameOver] )
 
     if (compGuess === userNumber) {
         console.log("Computer Guessed your number!");
