@@ -33,7 +33,7 @@ export default function App() {
   }
 
   if (gameIsOver && userNumber) {
-    screenSource = <GameOverScreen restartGame={restartGameHandler} rounds={rounds} />
+    screenSource = <GameOverScreen restartGame={restartGameHandler} userNumber={userNumber} rounds={rounds} />
   }
 
 

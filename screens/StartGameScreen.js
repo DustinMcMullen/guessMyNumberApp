@@ -1,7 +1,10 @@
 import { useState } from 'react'
-import {TextInput, View, StyleSheet, Alert} from 'react-native'
+import {TextInput, View, Text, StyleSheet, Alert} from 'react-native'
 import { PrimaryButton } from '../components/PrimaryButton'
 import { Colors } from '../utils/colors';
+import { Title } from '../components/Title';
+import { Card } from '../components/Card';
+import { InstructionText } from '../components/InstructionText';
 
 export function StartGameScreen ({chosenNumberHandler}) {
 
@@ -25,36 +28,32 @@ export function StartGameScreen ({chosenNumberHandler}) {
     }
 
     return (
-        <View style={styles.inputContainer}>
-            <TextInput style={styles.input}
-                maxLength={2}
-                keyboardType='number-pad'
-                autoCapitalize='none'
-                autoCorrect='none'
-                onChangeText={handleTextChange}
-                value={numberValue}
-            />
-            <View style={styles.buttonContainer} >
-                <PrimaryButton onPress={resetInputHandler}>Reset</PrimaryButton>
-                <PrimaryButton onPress={confirmInputHandler}>Confirm</PrimaryButton>
-            </View>
+        <View style={styles.rootContainer}>
+            <Title>Guess My Number</Title>
+            <Card>
+            <InstructionText>Enter a number</InstructionText>
+                <TextInput style={styles.input}
+                    maxLength={2}
+                    keyboardType='number-pad'
+                    autoCapitalize='none'
+                    autoCorrect='none'
+                    onChangeText={handleTextChange}
+                    value={numberValue}
+                />
+                <View style={styles.buttonContainer} >
+                    <PrimaryButton onPress={resetInputHandler}>Reset</PrimaryButton>
+                    <PrimaryButton onPress={confirmInputHandler}>Confirm</PrimaryButton>
+                </View>
+            </Card>
         </View>
     )
 }
 
 const styles = StyleSheet.create({
-    inputContainer: {
-        alignItems: 'center',
-        marginTop: 100,
-        marginHorizontal: 20,
-        padding: 16,
-        backgroundColor: Colors.primary800,
-        borderRadius: 8,
-        elevation: 4,
-        shadowColor: 'black',
-        shadowOffset: {width: 0, height: 2},
-        shadowRadius: 6,
-        shadowOpacity: 0.25,
+    rootContainer: {
+        flex: 1,
+        marginTop: 60,
+        padding: 24
     },
     input: {
         height: 50,

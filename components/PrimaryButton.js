@@ -5,7 +5,7 @@ export function PrimaryButton ({ children, onPress }) {
     return (
         <View style={styles.buttonOutterContainer}>
             <Pressable
-                style={ ({pressed})=> pressed ? [styles.buttonPressed, styles.buttonInnerContainer] : styles.buttonInnerContainer}
+                style={ ({pressed}) => pressed ? [styles.buttonPressed, styles.buttonInnerContainer] : styles.buttonInnerContainer}
                 onPress={onPress} android_ripple={{color: Colors.primary600}}
             >
                 <Text style={styles.buttonText}>{children}</Text>

@@ -3,6 +3,8 @@ import { View, Text, StyleSheet, Alert } from "react-native";
 import { Title } from "../components/Title";
 import { NumberContainer } from "../components/game/NumberContainer";
 import { PrimaryButton } from "../components/PrimaryButton";
+import { Card } from "../components/Card";
+import { InstructionText } from "../components/InstructionText";
 
 export function GameScreen ({userNumber, onGameOver}) {
 
@@ -42,13 +44,13 @@ export function GameScreen ({userNumber, onGameOver}) {
         <View style={styles.gameContainer}>
             <Title>Computers Guess</Title>
             <NumberContainer>{compGuess}</NumberContainer>
-            <View style={styles.hintContainer}>
-                <Text>higher or lower?</Text>
+            <Card>
+                <InstructionText>higher or lower?</InstructionText>
                 <View style={styles.buttonContainer}>
                     <PrimaryButton onPress={handleLowerHint}>-</PrimaryButton>
                     <PrimaryButton onPress={handleHigherHint}>+</PrimaryButton>
                 </View>
-            </View>
+            </Card>
         </View>
     )
 }
@@ -57,9 +59,6 @@ const styles = StyleSheet.create({
     gameContainer: {
         flex: 1,
         padding: 24,
-    },
-    hintContainer: {
-        alignItems: "center",
     },
     buttonContainer: {
         flexDirection: "row",
