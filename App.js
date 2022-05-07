@@ -12,21 +12,28 @@ export default function App() {
 
   const [userNumber, setUserNumber] = useState();
   const [gameIsOver, setGameIsOver] = useState(false);
+  const [rounds, setRounds] = useState();
 
   function chosenNumberHandler (chosenNumber) {
     setUserNumber(chosenNumber);
   }
 
-  function gameOverHandler () {
+  function gameOverHandler (numOfRounds) {
     setGameIsOver(true);
+    setRounds(numOfRounds);
+  }
+
+  function restartGameHandler () {
+    setUserNumber();
+    setGameIsOver(false);
   }
 
   if (userNumber) {
     screenSource = <GameScreen userNumber={userNumber} onGameOver={gameOverHandler} />
   }
 
-  if (gameIsOver) {
-    screenSource = <GameOverScreen />
+  if (gameIsOver && userNumber) {
+    screenSource = <GameOverScreen restartGame={restartGameHandler} rounds={rounds} />
   }
 
 

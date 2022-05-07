@@ -21,7 +21,6 @@ export function StartGameScreen ({chosenNumberHandler}) {
             Alert.alert("Invalid Number", "Number must be a number between 1 & 99.", [{text: "okay", style: "destructive", onPress: resetInputHandler}] )
             return
         }
-        console.log("valid chosenNumber: ", chosenNumber);
         chosenNumberHandler(chosenNumber)
     }
 

@@ -8,22 +8,20 @@ export function GameScreen ({userNumber, onGameOver}) {
 
     const [lowerBound, setLowerBound] = useState(1);
     const [upperBound, setUpperBound] = useState(100)
+    const [numOfRounds, setNumOfRounds] = useState(1);
 
     const compGuess = Math.floor( Math.random() * (upperBound - lowerBound) + lowerBound );
 
     useEffect( () => {
         if (userNumber === compGuess) {
-            onGameOver();
+            onGameOver(numOfRounds);
         }
     }, [userNumber, compGuess, onGameOver] )
-
-    if (compGuess === userNumber) {
-        console.log("Computer Guessed your number!");
-    }
 
     function handleLowerHint () {
         if (userNumber < compGuess){
             setUpperBound(compGuess);
+            setNumOfRounds(prevRounds => prevRounds + 1);
         } else {
             Alert.alert("No Cheating!", 'We want a fair game.', [ {text: 'oops', style: 'cancel'} ]);
             return
@@ -33,13 +31,12 @@ export function GameScreen ({userNumber, onGameOver}) {
     function handleHigherHint () {
         if (userNumber > compGuess){
             setLowerBound(compGuess + 1);
+            setNumOfRounds(prevRounds => prevRounds + 1);
         }  else {
             Alert.alert("No Cheating!");
             return
         } 
     }
-
-    console.log("compGuess: ", compGuess);
 
     return(
         <View style={styles.gameContainer}>
