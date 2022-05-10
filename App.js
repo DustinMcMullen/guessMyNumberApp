@@ -5,14 +5,25 @@ import { StartGameScreen } from './screens/StartGameScreen';
 import { LinearGradient } from 'expo-linear-gradient';
 import { GameScreen } from './screens/GameScreen';
 import { GameOverScreen } from './screens/GameOverScreen';
+import { useFonts } from "expo-font";
+import AppLoading, { apploading } from "expo-app-loading";
 
 export default function App() {
-
-  let screenSource = <StartGameScreen chosenNumberHandler={chosenNumberHandler} />
-
   const [userNumber, setUserNumber] = useState();
   const [gameIsOver, setGameIsOver] = useState(false);
   const [rounds, setRounds] = useState();
+
+  const [fontsLoading, ] = useFonts({
+    'open-sans': require('./assets/fonts/OpenSans-Regular.ttf'),
+    'open-sans-bold': require('./assets/fonts/OpenSans-Bold.ttf'),
+  })
+
+  if (!fontsLoading) {
+    return <AppLoading />;
+  }
+
+
+  let screenSource = <StartGameScreen chosenNumberHandler={chosenNumberHandler} />
 
   function chosenNumberHandler (chosenNumber) {
     setUserNumber(chosenNumber);

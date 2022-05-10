@@ -1,10 +1,11 @@
 import { useState } from "react";
-import { StyleSheet, View } from "react-native";
+import { StyleSheet, View, Image, Text } from "react-native";
 import { Title } from "../components/Title";
 import { Card } from "../components/Card";
 import { InstructionText } from "../components/InstructionText";
 import { PrimaryButton } from '../components/PrimaryButton';
 import { NumberContainer } from "../components/game/NumberContainer";
+import { Colors } from "react-native/Libraries/NewAppScreen";
 
 export function GameOverScreen ({restartGame, userNumber, rounds}) {
     
@@ -15,14 +16,17 @@ export function GameOverScreen ({restartGame, userNumber, rounds}) {
     return(
         <View style={styles.rootContainer}>
             <Title>Game Over!</Title>
-            <Card>
-                <InstructionText>Computer guessed your number:</InstructionText>
-                <NumberContainer>{userNumber}</NumberContainer>
-                <InstructionText>In {rounds} rounds!</InstructionText>
+            <View style={styles.imageContainer}>
+                <Image style={styles.successImage} source={require('../assets/images/success.png')} />
+            </View>
+            <View>
+                <InstructionText customStyle={{paddingTop: 24, padding: 0, color: Colors.primary800}}>Computer guessed your number:</InstructionText>
+                <InstructionText customStyle={{padding: 0, color: Colors.primary800}}><Text style={{fontFamily: 'open-sans-bold', fontSize: 24,}}>'{userNumber}'</Text></InstructionText>
+                <InstructionText customStyle={{padding: 0, paddingBottom: 32, color: Colors.primary800}}>In <Text style={{fontFamily: 'open-sans-bold'}}>{rounds}</Text> rounds!</InstructionText>
                 <View style={styles.buttonContainer}>
                     <PrimaryButton onPress={handleRestartGame}>Restart Game</PrimaryButton>
                 </View>
-            </Card>
+            </View>
         </View>
     )
 }
@@ -32,9 +36,19 @@ const styles = StyleSheet.create({
         flex: 1,
         padding: 24,
     },
+    imageContainer: {
+        alignItems: 'center',
+    },
+    successImage: {
+        width: 200,
+        height: 200,
+        borderRadius: 100,
+        borderWidth: 3,
+        marginTop: 24,
+    },
     buttonContainer: {
-        flexDirection: "row",
-        paddingHorizontal: 36,
-        paddingBottom: 12
+        flexDirection: 'row',
+        padding: 12,
+        paddingHorizontal: 100
     }
 })

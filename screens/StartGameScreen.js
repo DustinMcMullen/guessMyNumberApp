@@ -36,7 +36,7 @@ export function StartGameScreen ({chosenNumberHandler}) {
                     maxLength={2}
                     keyboardType='number-pad'
                     autoCapitalize='none'
-                    autoCorrect='none'
+                    autoCorrect={false}
                     onChangeText={handleTextChange}
                     value={numberValue}
                 />
@@ -60,10 +60,10 @@ const styles = StyleSheet.create({
         width: 60,
         textAlign: 'center',
         fontSize: 32,
+        marginBottom: 24,
         borderBottomColor: Colors.accent500,
         borderBottomWidth: 2,
         color: Colors.accent500,
-        marginVertical: 8,
         fontWeight: 'bold',
 
     },
