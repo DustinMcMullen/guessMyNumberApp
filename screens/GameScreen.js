@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { View, Text, StyleSheet, Alert, FlatList } from "react-native";
+import { View, StyleSheet, Alert, FlatList, useWindowDimensions, Dimensions } from "react-native";
 import { Title } from "../components/Title";
 import { NumberContainer } from "../components/game/NumberContainer";
 import { PrimaryButton } from "../components/PrimaryButton";
@@ -9,6 +9,8 @@ import { GuessLog } from "../components/game/GuessLog";
 import { Ionicons } from "@expo/vector-icons";
 
 export function GameScreen ({userNumber, onGameOver}) {
+
+    const {width, height} = useWindowDimensions();
 
     const [lowerBound, setLowerBound] = useState(1);
     const [upperBound, setUpperBound] = useState(100)
@@ -27,7 +29,7 @@ export function GameScreen ({userNumber, onGameOver}) {
         if (userNumber < compGuess){
             setUpperBound(compGuess);
             setNumOfRounds(prevRounds => prevRounds + 1);
-            setGuessRound( prevGuesRoud => [...prevGuesRoud, compGuess]);
+            setGuessRound( prevGuesRoud => [compGuess, ...prevGuesRoud]);
         } else {
             Alert.alert("No Cheating!", 'We want a fair game.', [ {text: 'oops', style: 'cancel'} ]);
             return
@@ -45,17 +47,43 @@ export function GameScreen ({userNumber, onGameOver}) {
         } 
     }
 
-    return(
-        <View style={styles.gameContainer}>
-            <Title>Computers Guess</Title>
+    let content = (
+        <>
             <NumberContainer>{compGuess}</NumberContainer>
             <Card>
                 <InstructionText>higher or lower?</InstructionText>
-                <View style={styles.buttonContainer}>
-                    <PrimaryButton onPress={handleLowerHint}><Ionicons name="md-remove" size="24" /></PrimaryButton>
-                    <PrimaryButton onPress={handleHigherHint}><Ionicons name="md-add" size="24" /></PrimaryButton>
+                <View style={styles.buttonsContainer}>
+                    <PrimaryButton onPress={handleLowerHint}><Ionicons name="md-remove" /></PrimaryButton>
+                    <PrimaryButton onPress={handleHigherHint}><Ionicons name="md-add" /></PrimaryButton>
                 </View>
             </Card>
+        </>
+    );
+
+    if (width > 500) {
+        content = (
+            <>
+              <View style={styles.buttonsContainerWide}>
+                <PrimaryButton onPress={handleLowerHint}><Ionicons name="md-remove" /></PrimaryButton>
+                <NumberContainer>{compGuess}</NumberContainer>
+                <PrimaryButton onPress={handleHigherHint}><Ionicons name="md-add" /></PrimaryButton>
+              </View>
+            </>
+        );
+    }
+
+    return(
+        <View style={styles.gameContainer}>
+            <Title>Computers Guess</Title>
+            {content}
+            {/* <NumberContainer>{compGuess}</NumberContainer>
+            <Card>
+                <InstructionText>higher or lower?</InstructionText>
+                <View style={styles.buttonsContainer}>
+                    <PrimaryButton onPress={handleLowerHint}><Ionicons name="md-remove" /></PrimaryButton>
+                    <PrimaryButton onPress={handleHigherHint}><Ionicons name="md-add" /></PrimaryButton>
+                </View>
+            </Card> */}
             <View style={styles.listContainer}>
                 <FlatList data={guessRound} renderItem={(itemData) => <GuessLog guessRound={numOfRounds - itemData.index -1} guess={itemData.item} />} keyExtractor={guess => guess} ></FlatList>
             </View>
@@ -63,13 +91,23 @@ export function GameScreen ({userNumber, onGameOver}) {
     )
 }
 
+const screenHeight = Dimensions.get("window").height;
+
 const styles = StyleSheet.create({
     gameContainer: {
         flex: 1,
+        alignItems: 'center',
         padding: 24,
     },
-    buttonContainer: {
+    buttonsContainer: {
         flexDirection: "row",
+    },
+    buttonContainer: {
+        flex: 1,
+    },
+    buttonsContainerWide: {
+        flexDirection: "row",
+        alignItems: "center",
     },
     listContainer: {
         flex:1,

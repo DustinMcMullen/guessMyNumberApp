@@ -1,13 +1,12 @@
-import { useState } from "react";
-import { StyleSheet, View, Image, Text } from "react-native";
+import { StyleSheet, View, Image, Text, useWindowDimensions, Dimensions } from "react-native";
 import { Title } from "../components/Title";
-import { Card } from "../components/Card";
 import { InstructionText } from "../components/InstructionText";
 import { PrimaryButton } from '../components/PrimaryButton';
-import { NumberContainer } from "../components/game/NumberContainer";
 import { Colors } from "react-native/Libraries/NewAppScreen";
 
 export function GameOverScreen ({restartGame, userNumber, rounds}) {
+
+    const {height} = useWindowDimensions();
     
     function handleRestartGame () {
         restartGame(true);
@@ -31,24 +30,27 @@ export function GameOverScreen ({restartGame, userNumber, rounds}) {
     )
 }
 
+const deviceWidth = Dimensions.get('window').width;
+
 const styles = StyleSheet.create({
     rootContainer: {
         flex: 1,
         padding: 24,
+        alignItems: 'center'
     },
     imageContainer: {
         alignItems: 'center',
     },
     successImage: {
-        width: 200,
-        height: 200,
-        borderRadius: 100,
+        width: deviceWidth < 388 ? 150 : 200,
+        height: deviceWidth < 388 ? 150 : 200,
+        borderRadius: deviceWidth < 388 ? 75 : 100,
         borderWidth: 3,
         marginTop: 24,
     },
     buttonContainer: {
         flexDirection: 'row',
         padding: 12,
-        paddingHorizontal: 100
+        paddingHorizontal: 10
     }
 })
