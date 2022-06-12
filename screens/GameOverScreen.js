@@ -6,7 +6,22 @@ import { Colors } from "react-native/Libraries/NewAppScreen";
 
 export function GameOverScreen ({restartGame, userNumber, rounds}) {
 
-    const {height} = useWindowDimensions();
+    const {width, height} = useWindowDimensions();
+
+    let imageSize = 300;
+    if (width < 380) {
+        imageSize = 150;
+    }
+
+    if (height < 480) {
+        imageSize = 80;
+    }
+
+    const imageStyle = {
+        width: imageSize,
+        height: imageSize,
+        borderRadius: imageSize / 2
+    };
     
     function handleRestartGame () {
         restartGame(true);
@@ -16,21 +31,22 @@ export function GameOverScreen ({restartGame, userNumber, rounds}) {
         <View style={styles.rootContainer}>
             <Title>Game Over!</Title>
             <View style={styles.imageContainer}>
-                <Image style={styles.successImage} source={require('../assets/images/success.png')} />
+                <Image style={[styles.successImage, imageStyle]} source={require('../assets/images/success.png')} />
             </View>
-            <View>
-                <InstructionText customStyle={{paddingTop: 24, padding: 0, color: Colors.primary800}}>Computer guessed your number:</InstructionText>
-                <InstructionText customStyle={{padding: 0, color: Colors.primary800}}><Text style={{fontFamily: 'open-sans-bold', fontSize: 24,}}>'{userNumber}'</Text></InstructionText>
-                <InstructionText customStyle={{padding: 0, paddingBottom: 32, color: Colors.primary800}}>In <Text style={{fontFamily: 'open-sans-bold'}}>{rounds}</Text> rounds!</InstructionText>
+            <View style={styles.textContainer}>
+                <InstructionText customStyle={{padding: 0, color: Colors.primary800}}>Computer guessed your number  </InstructionText>
+                <InstructionText customStyle={{padding: 0, color: Colors.primary800}}><Text style={{fontFamily: 'open-sans-bold', fontSize: 24,}}>{userNumber}</Text></InstructionText>
+                <InstructionText customStyle={{padding: 0, color: Colors.primary800}}> In <Text style={{fontFamily: 'open-sans-bold'}}>{rounds}</Text> rounds!</InstructionText>
+                </View>
                 <View style={styles.buttonContainer}>
                     <PrimaryButton onPress={handleRestartGame}>Restart Game</PrimaryButton>
                 </View>
-            </View>
+            {/* </View> */}
         </View>
     )
 }
 
-const deviceWidth = Dimensions.get('window').width;
+// const deviceWidth = Dimensions.get('window').width;
 
 const styles = StyleSheet.create({
     rootContainer: {
@@ -42,14 +58,18 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     successImage: {
-        width: deviceWidth < 388 ? 150 : 200,
-        height: deviceWidth < 388 ? 150 : 200,
-        borderRadius: deviceWidth < 388 ? 75 : 100,
         borderWidth: 3,
         marginTop: 24,
     },
+    textContainer: {
+        flex: 1,
+        alignItems: 'center',
+        flexDirection: 'row',
+        padding: 32,
+    },
     buttonContainer: {
         flexDirection: 'row',
+        justifyContent: 'center',
         padding: 12,
         paddingHorizontal: 10
     }

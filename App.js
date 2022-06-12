@@ -49,19 +49,22 @@ export default function App() {
 
 
   return (
-    <LinearGradient colors={['#4e0329', '#ddb52f']} style={styles.container}>
-      <ImageBackground
-        source={require('./assets/images/backgroundImage.png')}
-        resizeMode='cover'
-        style={styles.container}
-        imageStyle={styles.backgroundImage}
-      >
-        <SafeAreaView style={styles.container}>
-          {/* {!userNumber ? <StartGameScreen chosenNumberHandler={chosenNumberHandler} /> : <GameScreen userNumber={userNumber} />} */}
-          {screenSource}
-        </SafeAreaView>
-      </ImageBackground>
-    </LinearGradient>
+    <>
+      <StatusBar style='light' />
+      <LinearGradient colors={['#4e0329', '#ddb52f']} style={styles.container}>
+        <ImageBackground
+          source={require('./assets/images/backgroundImage.png')}
+          resizeMode='cover'
+          style={styles.container}
+          imageStyle={styles.backgroundImage}
+        >
+          <SafeAreaView style={styles.container}>
+            {/* {!userNumber ? <StartGameScreen chosenNumberHandler={chosenNumberHandler} /> : <GameScreen userNumber={userNumber} />} */}
+            {screenSource}
+          </SafeAreaView>
+        </ImageBackground>
+      </LinearGradient>
+    </>
   );
 }
 
